@@ -11,34 +11,34 @@ public class ClueTextHandler : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject clueUIObject;
 
-    //add clues and their answers here
     [NonSerialized] public Dictionary<string, string> clueDict = new Dictionary<string, string>() {
         {"1", "This is a sample clue. its answer is one (1)." }
     };
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool isReadingClue = false;
 
-    // Update is called once per frame
     void Update()
     {
-        if (clueObject.GetComponent<BoxCollider2D>().IsTouching(player.GetComponent<BoxCollider2D>())){
-            clueUIObject.SetActive(true);
-            //and update/change this
-            textMeshProUGUI.text = clueDict["1"];
-            Debug.Log(clueDict["1"]);
-            StartCoroutine(ReadDelay());
-            Debug.Log("off");
-            clueUIObject.SetActive(false);
+        if (!isReadingClue && clueObject.GetComponent<BoxCollider2D>().IsTouching(player.GetComponent<BoxCollider2D>()))
+        {
             clueObject.SetActive(false);
+            StartCoroutine(ShowClue());
         }
     }
 
-    IEnumerator ReadDelay()
+    IEnumerator ShowClue()
     {
+        isReadingClue = true;
+
+        clueUIObject.SetActive(true);
+        textMeshProUGUI.text = clueDict["1"];
+        Debug.Log(clueDict["1"]);
+
         yield return new WaitForSecondsRealtime(5);
+
+        Debug.Log("off");
+        clueUIObject.SetActive(false);
+        isReadingClue = false;
     }
 }
+
