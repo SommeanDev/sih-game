@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class QuizHandler : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class QuizHandler : MonoBehaviour
     private string[][] options;
     private int[] correctAnswers;
     private int currentQuestionIndex;
+
+    [NonSerialized] public bool answerIsCorrect = false;
 
     void Start()
     {
@@ -101,12 +104,14 @@ public class QuizHandler : MonoBehaviour
         {
             // Correct answer, change the image to green
             optionImages[selectedOption].color = Color.green;
+            answerIsCorrect = true;
         }
         else
         {
             // Incorrect answer, change the selected image to red and correct answer image to green
             optionImages[selectedOption].color = Color.red;
             optionImages[correctAnswers[currentQuestionIndex]].color = Color.green;
+            answerIsCorrect = false;
         }
 
         // Delay showing the next question for 1 second
