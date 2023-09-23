@@ -289,7 +289,7 @@ RectTransform:
   m_Children:
   - {fileID: 468835070}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -309,7 +309,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshProUGUI: {fileID: 28586906}
-  clueObject: {fileID: 540474067}
+  clueObject1: {fileID: 540474067}
+  clueObject2: {fileID: 1617932579}
   player: {fileID: 140473253}
   clueUIObject: {fileID: 1242383528}
 --- !u!1 &140473253
@@ -1954,7 +1955,7 @@ GameObject:
   - component: {fileID: 540474069}
   - component: {fileID: 540474068}
   m_Layer: 0
-  m_Name: Clue (1)
+  m_Name: Clue1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2051,7 +2052,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &936582454
 GameObject:
@@ -2119,7 +2120,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042677859
 GameObject:
@@ -27437,7 +27438,7 @@ GameObject:
   - component: {fileID: 1617932581}
   - component: {fileID: 1617932580}
   m_Layer: 0
-  m_Name: Clue
+  m_Name: Clue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27534,7 +27535,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1655238003
 GameObject:
