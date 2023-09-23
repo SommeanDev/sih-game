@@ -17,7 +17,9 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
-        
+
+        // Delay the activation of the homePanel
+        StartCoroutine(ActivateHomePanelAfterDelay(2.0f)); // 1 second delay
     }
 
     // Function to activate the Start Panel and deactivate the Home Panel
@@ -27,7 +29,6 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
-       
     }
 
     // Function to activate the Home Panel and deactivate the Start Panel
@@ -37,7 +38,6 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(true);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
-        
     }
 
     public void ActivateGamePanel()
@@ -46,7 +46,6 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(true);
         quizPanel.SetActive(false);
-
     }
 
     public void ActivateQuizPanel()
@@ -55,13 +54,14 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(true);
-
     }
 
-
-
-    
-
- 
+    // Coroutine to activate the Home Panel after a delay
+    private IEnumerator ActivateHomePanelAfterDelay(float delayInSeconds)
+    {
+        yield return new WaitForSeconds(delayInSeconds);
+        ActivateHomePanel();
+    }
 }
+
 
