@@ -15,9 +15,9 @@ public class Movement : MonoBehaviour
     //[SerializeField] private float fallingSpeed = 1.0f;
     public BoxCollider2D boxCollider;
     private float xMovement;
-    private bool doubleJump;
+    private bool doubleJump = false;
     public static System.DateTime timeInitial;
-    private enum MovementState { idle, running, jumping, falling };
+    private enum MovementState { idle, running, jumping };
 
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xMovement = Input.GetAxisRaw("Horizontal");
+        xMovement = /*Input.GetAxisRaw("Horizontal");*/ SimpleInput.GetAxis("Horizontal");
 
         if (xMovement != 0)
         {
@@ -70,6 +70,37 @@ public class Movement : MonoBehaviour
         UpdateAnimation();
     }
 
+    public void Jump()
+    {
+        bool isJumping = false;
+        if (IsGrounded() && (!Input.GetButtonDown("Jump") || !isJumping))
+        {
+            doubleJump = false;
+        }
+
+        if (IsGrounded() || doubleJump)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+            isJumping = true;
+            Debug.Log("Player Jumps");
+            doubleJump = !doubleJump;
+        }
+
+        UpdateAnimation();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsGrounded() && rb2d.velocity == new Vector2(rb2d.velocity.x, 0.01f))
+        {
+            rb2d.gravityScale = 5;
+        }
+        else
+        {
+            rb2d.gravityScale = 1;
+        }
+    }
+
     private void UpdateAnimation()
     {
         MovementState state;
@@ -86,10 +117,7 @@ public class Movement : MonoBehaviour
         if (rb2d.velocity.y > .1f)
         {
             state = MovementState.jumping;
-        } else if (rb2d.velocity.y < -.1f)
-        {
-            state = MovementState.falling;
-        }
+        } 
 
         animator.SetInteger("state", (int)state);
     }
