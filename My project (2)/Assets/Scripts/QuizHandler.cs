@@ -94,7 +94,7 @@ public class QuizHandler : MonoBehaviour
     // Set all option images to black
     foreach (Image optionImage in optionImages)
     {
-        optionImage.color = Color.black;
+        optionImage.color = Color.white;
     }
 }
 
