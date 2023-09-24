@@ -72,7 +72,7 @@ public class Movement : MonoBehaviour
         }
 
 
-        if (rb2d.transform.position.y < -10.0f)
+        if (rb2d.transform.position.y < -15.0f)
         {
             Time.timeScale = 0;
             gameOverScreen.Invoke();

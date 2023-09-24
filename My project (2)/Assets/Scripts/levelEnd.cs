@@ -17,16 +17,19 @@ public class levelEnd : MonoBehaviour
     [NonSerialized]
     public string[] questions =
     {
-        "What was the answer of the first clue?",
+        "Which legal doctrine allows for the limited use of copyrighted material without the copyright owner's permission under certain circumstances?",
+        "What is trademark dilution in intellectual property law?",
+        "How are trade secrets primarily protected from disclosure?",
     };
 
     [NonSerialized]public string[][] options = new string[][]
     {
-        new string[] {"one", "1" },
-
+        new string[] {"Fair Use Doctrine", "Public Domain Doctrine" },
+        new string[] {"A legal mechanism to enforce copyright claims", " The weakening of a famous trademark" },
+        new string[] {"By confidentiality agreements", "Through copyright registration" },
     };
 
-    [NonSerialized]public int[] queAnsIndexes = { 0, };
+    [NonSerialized]public int[] queAnsIndexes = { 0,1,0, };
 
     void OnTriggerEnter2D(Collider2D other)
     {

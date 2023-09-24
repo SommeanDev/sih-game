@@ -14,6 +14,11 @@ public class EndQuizHandler : MonoBehaviour
     public UnityEvent incorrectAnsScene;
     private int iq;
 
+    void Start()
+    {
+        iq += PlayerPrefs.GetInt("IQ");
+    }
+
     public void CheckAnswer(TextMeshProUGUI textMesh)
     {
         if (textMesh.text == lvlEndScript.options[clueTextHandler.clueIndex][lvlEndScript.queAnsIndexes[clueTextHandler.clueIndex]])

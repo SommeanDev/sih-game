@@ -61,12 +61,19 @@ public class PanelController : MonoBehaviour
         quizPanel.SetActive(true);
     }
 
-    public void ActivateSlugScene()
-    {
-        // Set the PlayerPrefs flag to indicate that the scene has been loaded before
-        PlayerPrefs.SetInt("IsSceneLoadedBefore", 1);
-        SceneManager.LoadScene("CollectInfoScene");
-    }
+    public void StartLoadingSlugSceneWithDelay()
+{
+    // Set the PlayerPrefs flag to indicate that the scene has been loaded before
+    PlayerPrefs.SetInt("IsSceneLoadedBefore", 1);
+
+    // Call ActivateSlugScene with a delay of 0.2 seconds
+    Invoke("ActivateSlugScene", 1.5f);
+}
+
+private void ActivateSlugScene()
+{
+    SceneManager.LoadScene("SAdv_Lvl01");
+}
 
     public void QuitGame()
     {
