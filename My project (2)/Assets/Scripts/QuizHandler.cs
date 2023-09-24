@@ -10,17 +10,21 @@ public class QuizHandler : MonoBehaviour
     public TextMeshProUGUI questionText;
     public Button[] optionButtons;
     public Image[] optionImages;
+    public TextMeshProUGUI correctAnswersText;
 
     private string[] questions;
     private string[][] options;
     private int[] correctAnswers;
     private int currentQuestionIndex;
+    private int tmp;
 
     [NonSerialized] public bool answerIsCorrect = false;
 
     void Start()
     {
         // Initialize questions, options, and correct answers
+        tmp += PlayerPrefs.GetInt("IQ");
+        UpdateCorrectAnswersText();
         questions = new string[]
         {
             "Question 1: What does 'IPR' stand for?",
@@ -94,7 +98,7 @@ public class QuizHandler : MonoBehaviour
     // Set all option images to black
     foreach (Image optionImage in optionImages)
     {
-        optionImage.color = Color.black;
+        optionImage.color = Color.white;
     }
 }
 
@@ -105,6 +109,8 @@ public class QuizHandler : MonoBehaviour
             // Correct answer, change the image to green
             optionImages[selectedOption].color = Color.green;
             answerIsCorrect = true;
+            tmp++; // Increment tmp for correct answer
+            UpdateCorrectAnswersText();
         }
         else
         {
@@ -116,6 +122,12 @@ public class QuizHandler : MonoBehaviour
 
         // Delay showing the next question for 1 second
         StartCoroutine(NextQuestionDelay());
+    }
+
+     void UpdateCorrectAnswersText()
+    {
+        // Update the TextMeshProUGUI component with the correct answers count
+        correctAnswersText.text = ""+tmp;
     }
 
     IEnumerator NextQuestionDelay()

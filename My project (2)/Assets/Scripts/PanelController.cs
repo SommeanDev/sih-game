@@ -1,28 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelController : MonoBehaviour
 {
-    public GameObject startPanel; // Reference to the Start GameObject in the Unity Inspector
-    public GameObject homePanel;  // Reference to the Home GameObject in the Unity Inspector
+    public GameObject startPanel; 
+    public GameObject homePanel;  
     public GameObject gamePanel;
     public GameObject quizPanel;
+    
 
-    // Start is called before the first frame update
-    void Start()
+     private void Start()
     {
-        // Initially, disable the homePanel and enable the startPanel
-        startPanel.SetActive(true);
-        homePanel.SetActive(false);
-        gamePanel.SetActive(false);
-        quizPanel.SetActive(false);
-
-        // Delay the activation of the homePanel
-        StartCoroutine(ActivateHomePanelAfterDelay(2.0f)); // 1 second delay
+          ActivateStartPanel();
+        if (PlayerPrefs.GetInt("IsSceneLoadedBefore", 0) == 0)
+        {
+            // This is the first load of the scene
+            StartCoroutine(ActivateHomePanelAfterDelay(2.0f));
+            PlayerPrefs.SetInt("IsSceneLoadedBefore", 1); // Set the flag to indicate the scene has been loaded
+        }
+        else
+        {
+            // This is not the first load, activate the game panel immediately
+            ActivateGamePanel();
+        }
     }
 
-    // Function to activate the Start Panel and deactivate the Home Panel
+
     public void ActivateStartPanel()
     {
         startPanel.SetActive(true);
@@ -54,6 +59,28 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(true);
+    }
+
+    public void StartLoadingSlugSceneWithDelay()
+{
+    // Set the PlayerPrefs flag to indicate that the scene has been loaded before
+    PlayerPrefs.SetInt("IsSceneLoadedBefore", 1);
+
+    // Call ActivateSlugScene with a delay of 0.2 seconds
+    Invoke("ActivateSlugScene", 1.5f);
+}
+
+private void ActivateSlugScene()
+{
+    SceneManager.LoadScene("SAdv_Lvl01");
+}
+
+    public void QuitGame()
+    {
+        PlayerPrefs.SetInt("IsSceneLoadedBefore", 0); // Reset the flag to 0
+        PlayerPrefs.Save(); // Save the PlayerPrefs
+        Application.Quit();
+
     }
 
     // Coroutine to activate the Home Panel after a delay
