@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class Movement : MonoBehaviour
     public float horizontalForce = 5f;
     //[SerializeField] private float fallingSpeed = 1.0f;
     public BoxCollider2D boxCollider;
+
+    public UnityEvent gameOverScreen;
     private float xMovement;
     private bool doubleJump = false;
     public static System.DateTime timeInitial;
@@ -66,6 +70,18 @@ public class Movement : MonoBehaviour
                 doubleJump = !doubleJump;
             }
         }
+
+
+        if (rb2d.transform.position.y < -10.0f)
+        {
+            Time.timeScale = 0;
+            gameOverScreen.Invoke();
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+
 
         UpdateAnimation();
     }
@@ -125,5 +141,10 @@ public class Movement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0f, Vector2.down, .1f, groundLayer);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

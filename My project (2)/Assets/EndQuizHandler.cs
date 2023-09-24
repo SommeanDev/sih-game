@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class EndQuizHandler : MonoBehaviour
 {
@@ -22,5 +23,10 @@ public class EndQuizHandler : MonoBehaviour
         {
             incorrectAnsScene.Invoke();
         }
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
