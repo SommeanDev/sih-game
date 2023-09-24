@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     public LayerMask groundLayer;
     public float jumpForce = 400f;
     public float horizontalForce = 5f;
+    public float lowestHeight = -10.0f;
     //[SerializeField] private float fallingSpeed = 1.0f;
     public BoxCollider2D boxCollider;
 
@@ -72,7 +73,7 @@ public class Movement : MonoBehaviour
         }
 
 
-        if (rb2d.transform.position.y < -15.0f)
+        if (rb2d.transform.position.y < lowestHeight)
         {
             Time.timeScale = 0;
             gameOverScreen.Invoke();

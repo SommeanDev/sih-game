@@ -730,6 +730,7 @@ MonoBehaviour:
     m_Bits: 8
   jumpForce: 7
   horizontalForce: 5
+  lowestHeight: -10
   boxCollider: {fileID: 140473258}
   gameOverScreen:
     m_PersistentCalls:
