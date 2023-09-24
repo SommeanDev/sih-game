@@ -10,6 +10,7 @@ public class ClueTextHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI textMeshProUGUI;
     [SerializeField] GameObject clueUIObject;
     [NonSerialized] public int clueIndex;
+    public AudioSource colletedClueAudio;
     //add clues and their answers here
     string[] clues = new string[]
     {
@@ -25,6 +26,7 @@ public class ClueTextHandler : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            
             clueIndex = UnityEngine.Random.Range(0, clues.Length);
             clueEvent.Invoke();
             textMeshProUGUI.SetText(clues[clueIndex]);
@@ -35,6 +37,7 @@ public class ClueTextHandler : MonoBehaviour
 
     IEnumerator ReadDelay()
     {
+        colletedClueAudio.Play();
         yield return new WaitForSecondsRealtime(5);
     }
 }
