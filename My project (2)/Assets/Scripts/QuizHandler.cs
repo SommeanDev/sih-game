@@ -16,13 +16,15 @@ public class QuizHandler : MonoBehaviour
     private string[][] options;
     private int[] correctAnswers;
     private int currentQuestionIndex;
-    private int tmp = 0;
+    private int tmp;
 
     [NonSerialized] public bool answerIsCorrect = false;
 
     void Start()
     {
         // Initialize questions, options, and correct answers
+        tmp += PlayerPrefs.GetInt("IQ");
+        UpdateCorrectAnswersText();
         questions = new string[]
         {
             "Question 1: What does 'IPR' stand for?",
