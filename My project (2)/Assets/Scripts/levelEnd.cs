@@ -1,29 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class levelEnd : MonoBehaviour
 {
-    [SerializeField] private GameObject levelEndPanel;
-    [SerializeField] private GameObject mobileControlsPanel;
-    [SerializeField] private TMP_Text timeTakenText;
-    private TimeSpan duration;
-    private void OnCollisionEnter2D(Collision2D collision)
+    public UnityEvent levelEndEventScreen;
+    public ClueTextHandler clueTextHandler;
+    public GameObject clueObject;
+    [SerializeField] private TextMeshProUGUI questionTextUGUI;
+    public List<Button> optionButtons;
+
+    [NonSerialized]
+    public string[] questions =
     {
-        if (collision.gameObject.name == "EndFlag")
+        "What was the answer of the first clue?",
+    };
+
+    [NonSerialized]public string[][] options = new string[][]
+    {
+        new string[] {"one", "1" },
+
+    };
+
+    [NonSerialized]public int[] queAnsIndexes = { 0, };
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && !clueObject.activeInHierarchy)
         {
-            Debug.Log("Level End");
-            levelEndPanel.SetActive(true);
-            if (mobileControlsPanel.activeSelf)
+            Debug.Log("Contacted player");
+            levelEndEventScreen.Invoke();
+            questionTextUGUI.text = questions[clueTextHandler.clueIndex];
+            int i = 0;
+            foreach (Button optionButton in optionButtons)
             {
-                mobileControlsPanel.SetActive(false);
+                optionButton.GetComponentInChildren<TextMeshProUGUI>().SetText(options[clueTextHandler.clueIndex][i]);
+                i++;
             }
-            duration = DateTime.Now - PlayerInputMovement.timeInitial;
-            Debug.Log(duration);
-            timeTakenText.text = duration.ToString() + "s";
-            Time.timeScale = 0f;
         }
     }
 }

@@ -1,31 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 using System;
+using System.Collections;
 
 public class ClueTextHandler : MonoBehaviour
 {
     public UnityEvent clueEvent;
     [SerializeField] TextMeshProUGUI textMeshProUGUI;
     [SerializeField] GameObject clueUIObject;
-
+    [NonSerialized] public int clueIndex;
     //add clues and their answers here
-    [NonSerialized] public Dictionary<string, string> clueDict = new Dictionary<string, string>() {
-        {"1", "This is a sample clue. its answer is one (1)." }
+    string[] clues = new string[]
+    {
+        "This is a sample Clue. its answer is one",
     };
-
    
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            clueIndex = UnityEngine.Random.Range(0, clues.Length);
             clueEvent.Invoke();
-            textMeshProUGUI.SetText(clueDict["1"]);
+            textMeshProUGUI.SetText(clues[clueIndex]);
             StartCoroutine(ReadDelay());
             //clueUIObject.SetActive(false);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
