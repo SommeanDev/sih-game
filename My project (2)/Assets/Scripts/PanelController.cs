@@ -81,12 +81,17 @@ private void ActivateSlugScene()
     SceneManager.LoadScene("SAdv_Lvl01");
 }
 
-    public void QuitGame()
+    private void OnApplicationQuit()
     {
+        // This method will be called when the application is about to quit.
         PlayerPrefs.SetInt("IsSceneLoadedBefore", 0); // Reset the flag to 0
         PlayerPrefs.Save(); // Save the PlayerPrefs
-        Application.Quit();
+    }
 
+    public void QuitGame()
+    {
+        // Call this method when you want to quit the game.
+        Application.Quit();
     }
 
     // Coroutine to activate the Home Panel after a delay
