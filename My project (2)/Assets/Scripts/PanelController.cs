@@ -9,6 +9,8 @@ public class PanelController : MonoBehaviour
     public GameObject homePanel;  
     public GameObject gamePanel;
     public GameObject quizPanel;
+    public GameObject bgm;
+
     
 
      private void Start()
@@ -34,6 +36,7 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
+        bgm.SetActive(false);
     }
 
     // Function to activate the Home Panel and deactivate the Start Panel
@@ -43,6 +46,7 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(true);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
+        bgm.SetActive(true);
     }
 
     public void ActivateGamePanel()
@@ -51,6 +55,7 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(true);
         quizPanel.SetActive(false);
+        bgm.SetActive(true);
     }
 
     public void ActivateQuizPanel()
@@ -59,6 +64,7 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(true);
+        bgm.SetActive(false);
     }
 
     public void StartLoadingSlugSceneWithDelay()
@@ -75,12 +81,17 @@ private void ActivateSlugScene()
     SceneManager.LoadScene("SAdv_Lvl01");
 }
 
-    public void QuitGame()
+    private void OnApplicationQuit()
     {
+        // This method will be called when the application is about to quit.
         PlayerPrefs.SetInt("IsSceneLoadedBefore", 0); // Reset the flag to 0
         PlayerPrefs.Save(); // Save the PlayerPrefs
-        Application.Quit();
+    }
 
+    public void QuitGame()
+    {
+        // Call this method when you want to quit the game.
+        Application.Quit();
     }
 
     // Coroutine to activate the Home Panel after a delay
