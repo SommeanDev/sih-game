@@ -11,6 +11,7 @@ public class smove : MonoBehaviour
     private bool isMovingDown = false;
     private float currentRotationAngle = -10f; 
     public float rotationSpeed = 5f;
+    public bool ispaused = false;
 
     void Start()
     {
@@ -20,9 +21,11 @@ public class smove : MonoBehaviour
     void Update()
     {
         // Forward movement with constant velocity
-       
+       if(!ispaused)
+       {
         Vector2 forwardVelocity = new Vector2(moveSpeed, rb2d.velocity.y);
         rb2d.velocity = forwardVelocity;
+       }
 
         // Rotate the sprite smoothly
         float targetRotation = 0f;
@@ -103,5 +106,16 @@ private IEnumerator LerpRotation(Quaternion targetRotation, float duration)
     private void RotateSprite(float angle)
     {
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+    public void pause()
+    {
+        ispaused = true;
+        Vector2 ZeroVelocity = new Vector2(0f, 0f);
+        rb2d.velocity = ZeroVelocity;
+    }
+    public void resume()
+    {
+        ispaused = false;
+        
     }
 }
