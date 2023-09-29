@@ -110,6 +110,7 @@ public class QuizHandler : MonoBehaviour
             optionImages[selectedOption].color = Color.green;
             answerIsCorrect = true;
             tmp++; // Increment tmp for correct answer
+            PlayerPrefs.SetInt("IQ", tmp);
             UpdateCorrectAnswersText();
         }
         else
