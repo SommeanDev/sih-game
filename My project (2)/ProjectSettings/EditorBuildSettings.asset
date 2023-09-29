@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SAdv_Lvl03.unity
     guid: a9179c8a8b28fd745a1b0683a0480faf
+  - enabled: 1
+    path: Assets/Scenes/IPWARS.unity
+    guid: 9a9dde5bcb7110c49a12ccb3753d99cf
   m_configObjects: {}
