@@ -9,6 +9,9 @@ public class PanelController : MonoBehaviour
     public GameObject homePanel;  
     public GameObject gamePanel;
     public GameObject quizPanel;
+    public GameObject dailyPanel;
+    public GameObject bgm;
+
     
 
      private void Start()
@@ -16,13 +19,11 @@ public class PanelController : MonoBehaviour
           ActivateStartPanel();
         if (PlayerPrefs.GetInt("IsSceneLoadedBefore", 0) == 0)
         {
-            // This is the first load of the scene
             StartCoroutine(ActivateHomePanelAfterDelay(2.0f));
-            PlayerPrefs.SetInt("IsSceneLoadedBefore", 1); // Set the flag to indicate the scene has been loaded
+            PlayerPrefs.SetInt("IsSceneLoadedBefore", 1); 
         }
         else
         {
-            // This is not the first load, activate the game panel immediately
             ActivateGamePanel();
         }
     }
@@ -34,6 +35,8 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
+        dailyPanel.SetActive(false);
+        bgm.SetActive(false);
     }
 
     // Function to activate the Home Panel and deactivate the Start Panel
@@ -43,6 +46,8 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(true);
         gamePanel.SetActive(false);
         quizPanel.SetActive(false);
+        dailyPanel.SetActive(false);
+        bgm.SetActive(true);
     }
 
     public void ActivateGamePanel()
@@ -51,6 +56,8 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(true);
         quizPanel.SetActive(false);
+        dailyPanel.SetActive(false);
+        bgm.SetActive(true);
     }
 
     public void ActivateQuizPanel()
@@ -59,6 +66,18 @@ public class PanelController : MonoBehaviour
         homePanel.SetActive(false);
         gamePanel.SetActive(false);
         quizPanel.SetActive(true);
+        dailyPanel.SetActive(false);
+        bgm.SetActive(false);
+    }
+
+    public void ActivateDilyPanel()
+    {
+        startPanel.SetActive(false);
+        homePanel.SetActive(false);
+        gamePanel.SetActive(false);
+        quizPanel.SetActive(false);
+        dailyPanel.SetActive(true);
+        bgm.SetActive(false);
     }
 
     public void StartLoadingSlugSceneWithDelay()
@@ -75,12 +94,20 @@ private void ActivateSlugScene()
     SceneManager.LoadScene("SAdv_Lvl01");
 }
 
+   void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+        }
+    }
+
     public void QuitGame()
     {
+        // Call this method when you want to quit the game.
         PlayerPrefs.SetInt("IsSceneLoadedBefore", 0); // Reset the flag to 0
         PlayerPrefs.Save(); // Save the PlayerPrefs
         Application.Quit();
-
     }
 
     // Coroutine to activate the Home Panel after a delay
@@ -88,6 +115,11 @@ private void ActivateSlugScene()
     {
         yield return new WaitForSeconds(delayInSeconds);
         ActivateHomePanel();
+    }
+
+    public void IpWar()
+    {
+      SceneManager.LoadScene("IPWARS");  
     }
 }
 
