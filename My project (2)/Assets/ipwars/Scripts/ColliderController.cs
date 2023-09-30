@@ -60,17 +60,17 @@ public class ColliderController : MonoBehaviour
     if (bulletSpawnPoint != null)
     {
         // Create a new bullet at the spawn point's position
-        print("Bullet instantiated");
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.transform.position, bulletSpawnPoint.transform.rotation);
         Debug.Log("Bullet instantiated");
-        
+
         // Get the bullet's rigidbody2D and apply velocity
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = transform.right * bulletSpeed; // Shoot in the direction of the player's right, adjust as needed
+            rb.velocity = bullet.transform.right * bulletSpeed; // Shoot in the direction of the bullet's right
         }
     }
 }
+
 
 }
