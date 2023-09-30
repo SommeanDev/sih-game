@@ -5,38 +5,68 @@ using UnityEngine.SceneManagement;
 
 public class CorrectAnsChecker : MonoBehaviour
 {
+    private Renderer rend;  // Reference to the Renderer component
+    private Color originalColor;  // Store the original color
+
+    private void Start()
+    {
+        // Get the Renderer component attached to the GameObject
+        rend = GetComponent<Renderer>();
+
+        // Store the original color
+        originalColor = rend.material.color;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            DestroyIfInCameraFrame();
+            StartCoroutine(Destroy());
+        }
+
+       else if (collision.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(ChangeColorAndDestroy());
         }
     }
 
-    private void OnBecameInvisible()
+
+
+    private IEnumerator ChangeColorAndDestroy()
     {
+        // Change the color to green
+        rend.material.color = Color.green;
+        print("wait");
+
+        // Wait for 0.2 seconds
+        yield return new WaitForSeconds(0.2f);
+
+        // Restore the original color
+        rend.material.color = originalColor;
+
+        // Destroy the GameObject
         Destroy(gameObject);
+
+        
     }
 
-    private void DestroyIfInCameraFrame()
+     private IEnumerator Destroy()
     {
-        Camera mainCamera = Camera.main;
-        if (mainCamera == null)
-        {
-            Debug.LogWarning("Main camera not found.");
-            return;
-        }
+        // Change the color to green
+        rend.material.color = Color.green;
+        print("wait");
 
-        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);
+        // Wait for 0.2 seconds
+        yield return new WaitForSeconds(0.2f);
 
-        // Check if the GameObject is within the camera's view
-        if (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1)
-        {
-            // Destroy the GameObject
-            Destroy(gameObject);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        // Restore the original color
+        rend.material.color = originalColor;
+
+        // Destroy the GameObject
+        Destroy(gameObject);
+
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
-
 

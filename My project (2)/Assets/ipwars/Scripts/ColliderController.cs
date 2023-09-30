@@ -10,6 +10,9 @@ public class ColliderController : MonoBehaviour
     private int playerObstacleCollisions = 0;
     public GameObject bulletSpawnPoint;
 
+    private Renderer rend;  // Reference to the Renderer component
+    private Color originalColor; 
+
 
     void Update()
 {
@@ -24,12 +27,12 @@ public class ColliderController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("CorrectAns"))
-        {
-            print("collision");
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.CompareTag("IncorrectAns"))
+        // if (collision.gameObject.CompareTag("CorrectAns"))
+        // {
+        //     print("collision");
+        //     Destroy(collision.gameObject);
+        // }
+        if (collision.gameObject.CompareTag("IncorrectAns"))
         {
             print("collision");
             Destroy(gameObject); // Destroy the player
