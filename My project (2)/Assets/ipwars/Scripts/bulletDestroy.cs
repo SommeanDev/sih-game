@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class bulletDestroy : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-            Destroy(gameObject);  
+        Debug.Log("Collision detected");
+       
+            Destroy(gameObject);
+        
     }
 }

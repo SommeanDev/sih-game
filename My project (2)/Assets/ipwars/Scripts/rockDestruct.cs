@@ -17,7 +17,7 @@ public class rockDestruct : MonoBehaviour
     }
 
     // This function is called when a collision occurs
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the colliding object has the "bullet" tag
         if (collision.gameObject.CompareTag("Bullet"))

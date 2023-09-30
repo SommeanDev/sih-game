@@ -22,7 +22,7 @@ public class ColliderController : MonoBehaviour
     }
 }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("CorrectAns"))
         {
@@ -45,6 +45,15 @@ public class ColliderController : MonoBehaviour
                 Destroy(gameObject); // Destroy the player
                 RestartScene();
             }
+        }
+
+        else if (collision.gameObject.CompareTag("Boundary"))
+        {
+            
+          
+                Destroy(gameObject); // Destroy the player
+                RestartScene();
+            
         }
       
     }
