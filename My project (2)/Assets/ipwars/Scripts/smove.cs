@@ -12,6 +12,8 @@ public class smove : MonoBehaviour
     private float currentRotationAngle = -10f; 
     public float rotationSpeed = 5f;
     public bool ispaused = false;
+    private bool isButtonDownDown = false; 
+    private bool isButtonDownUp = false;
 
     void Start()
     {
@@ -41,6 +43,18 @@ public class smove : MonoBehaviour
 
         currentRotationAngle = Mathf.Lerp(currentRotationAngle, targetRotation, Time.deltaTime * rotationSpeed);
         RotateSprite(currentRotationAngle);
+
+        if (!ispaused)
+        {
+            if (isButtonDownUp)
+            {
+                MoveUp();
+            }
+            else if (isButtonDownDown)
+            {
+                MoveDown();
+            }
+        }
 
      
     }
@@ -117,5 +131,35 @@ private IEnumerator LerpRotation(Quaternion targetRotation, float duration)
     {
         ispaused = false;
         
+    }
+
+
+   
+    // Add these two functions to handle button press and release
+
+    public void OnButtonDown(string buttonType)
+    {
+        if (buttonType == "Up")
+        {
+            isButtonDownUp = true;
+        }
+        else if (buttonType == "Down")
+        {
+            isButtonDownDown = true;
+        }
+    }
+
+    public void OnButtonUp(string buttonType)
+    {
+        if (buttonType == "Up")
+        {
+            isButtonDownUp = false;
+            StopVerticalMovement();
+        }
+        else if (buttonType == "Down")
+        {
+            isButtonDownDown = false;
+            StopVerticalMovement();
+        }
     }
 }
