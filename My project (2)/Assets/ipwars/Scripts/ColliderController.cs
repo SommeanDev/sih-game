@@ -27,18 +27,8 @@ public class ColliderController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // if (collision.gameObject.CompareTag("CorrectAns"))
-        // {
-        //     print("collision");
-        //     Destroy(collision.gameObject);
-        // }
-        if (collision.gameObject.CompareTag("IncorrectAns"))
-        {
-            print("collision");
-            Destroy(gameObject); // Destroy the player
-            RestartScene();
-        }
-        else if (collision.gameObject.CompareTag("Obstacle"))
+        
+         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Destroy(collision.gameObject);
             print("collision");
