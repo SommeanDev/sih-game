@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class CorrectAnsChecker : MonoBehaviour
+public class Incorrectans : MonoBehaviour
 {
     private Renderer rend;  // Reference to the Renderer component
     private Color originalColor;  // Store the original color
@@ -18,8 +18,8 @@ public class CorrectAnsChecker : MonoBehaviour
 
         // Store the original color
         originalColor = rend.material.color;
-        iq += PlayerPrefs.GetInt("IQ");
-     
+         iq += PlayerPrefs.GetInt("IQ");
+        
         UpdateCorrectAnswersText();
     }
 
@@ -28,24 +28,24 @@ public class CorrectAnsChecker : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             StartCoroutine(Destroy());
+             iq += 1;
+            PlayerPrefs.SetInt("IQ", iq);
+            UpdateCorrectAnswersText();
         }
+        
 
        else if (collision.gameObject.CompareTag("Player"))
         {
             StartCoroutine(ChangeColorAndDestroy());
-            iq += 1;
-            PlayerPrefs.SetInt("IQ", iq);
-            UpdateCorrectAnswersText();
         }
-   }
-    
+    }
 
 
 
     private IEnumerator ChangeColorAndDestroy()
     {
         // Change the color to green
-        rend.material.color = Color.green;
+        rend.material.color = Color.red;
         print("wait");
 
         // Wait for 0.2 seconds
@@ -54,9 +54,9 @@ public class CorrectAnsChecker : MonoBehaviour
         // Restore the original color
         rend.material.color = originalColor;
 
-
         // Destroy the GameObject
         Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         
     }
@@ -64,11 +64,11 @@ public class CorrectAnsChecker : MonoBehaviour
      private IEnumerator Destroy()
     {
         // Change the color to green
-        rend.material.color = Color.green;
+        rend.material.color = Color.red;
         print("wait");
 
         // Wait for 0.2 seconds
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         // Restore the original color
         rend.material.color = originalColor;
@@ -77,7 +77,7 @@ public class CorrectAnsChecker : MonoBehaviour
         Destroy(gameObject);
 
         // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
     }
      void UpdateCorrectAnswersText()
     {
@@ -85,4 +85,3 @@ public class CorrectAnsChecker : MonoBehaviour
         correctAnswersText.text = ""+iq;
     }
 }
-
