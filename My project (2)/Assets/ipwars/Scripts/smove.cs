@@ -14,6 +14,8 @@ public class smove : MonoBehaviour
     public bool ispaused = false;
     private bool isButtonDownDown = false; 
     private bool isButtonDownUp = false;
+    public float smoothTime = 0.2f; // Adjust this value to control the smoothing effect
+private Vector2 velocity = Vector2.zero;
 
 
     void Start()
@@ -65,13 +67,16 @@ public class smove : MonoBehaviour
     
 
     public void MoveUp(float targetRotation)
-    {
-        isMovingUp = true;
-        isMovingDown = false;
-        Vector2 upwardVelocity = new Vector2(rb2d.velocity.x, targetRotation/2);
-        rb2d.velocity = upwardVelocity;
+{
+    isMovingUp = true;
+    isMovingDown = false;
 
-    }
+    // Calculate the desired velocity
+    Vector2 targetVelocity = new Vector2(rb2d.velocity.x, targetRotation / 2);
+
+    // Smoothly interpolate the velocity
+    rb2d.velocity = Vector2.SmoothDamp(rb2d.velocity, targetVelocity, ref velocity, smoothTime);
+}
 
 
 

@@ -4,26 +4,47 @@ using UnityEngine;
 
 public class Copyposition : MonoBehaviour
 {
-    public GameObject sourceObject; // Assign the source GameObject in the Unity Inspector
-    public Camera cameraToUse; // Assign the camera in the Unity Inspector
+    public Transform target; // Reference to the target GameObject whose position you want to copy.
+    private bool isYOutOfRange = false;
+    private float previousY;
 
-    // Update is called once per frame
+    void Start()
+    {
+        if (target != null)
+        {
+            previousY = target.position.y;
+        }
+    }
+
     void Update()
     {
-        if (sourceObject != null && cameraToUse != null)
+        if (target != null)
         {
-            // Get the position of the sourceObject in screen space
-            Vector3 screenPos = cameraToUse.WorldToScreenPoint(sourceObject.transform.position);
+            // Copy the X position from the target GameObject.
+            transform.position = new Vector3(target.position.x, transform.position.y, transform.position.z);
 
-            // Convert the screen position to world position for this GameObject
-            Vector3 worldPos = cameraToUse.ScreenToWorldPoint(screenPos);
+            float currentY = target.position.y;
 
-            // Set the position of this GameObject to match the sourceObject's position
-            transform.position = worldPos;
-        }
-        else
-        {
-            Debug.LogWarning("Please assign the sourceObject and cameraToUse in the Inspector.");
+            // Check if the Y position is beyond the -10f to 10f range.
+            if (currentY < -5.5f || currentY > -1.5f)
+            {
+                isYOutOfRange = true;
+            }
+            else
+            {
+                isYOutOfRange = false;
+            }
+
+            // Copy the Y direction motion only when it's out of range.
+            if (isYOutOfRange)
+            {
+                float deltaY = currentY - previousY;
+                transform.position += Vector3.up * deltaY;
+            }
+
+            previousY = currentY;
         }
     }
 }
+
+
