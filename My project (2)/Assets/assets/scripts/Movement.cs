@@ -20,10 +20,10 @@ public class Movement : MonoBehaviour
 
     public UnityEvent gameOverScreen;
     private float xMovement;
-    private bool doubleJump = false;
+    public bool doubleJump = false, isJumping = false;
     public static System.DateTime timeInitial;
     private enum MovementState { idle, running, jumping };
-
+    public AudioSource jumpAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -84,12 +84,12 @@ public class Movement : MonoBehaviour
         }
 
 
+
         UpdateAnimation();
     }
 
     public void Jump()
     {
-        bool isJumping = false;
         if (IsGrounded() && (!Input.GetButtonDown("Jump") || !isJumping))
         {
             doubleJump = false;
@@ -101,6 +101,11 @@ public class Movement : MonoBehaviour
             isJumping = true;
             Debug.Log("Player Jumps");
             doubleJump = !doubleJump;
+        }
+
+        if (IsGrounded() && isJumping)
+        {
+            jumpAudio.Play();
         }
 
         UpdateAnimation();
@@ -139,7 +144,7 @@ public class Movement : MonoBehaviour
         animator.SetInteger("state", (int)state);
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0f, Vector2.down, .1f, groundLayer);
     }
