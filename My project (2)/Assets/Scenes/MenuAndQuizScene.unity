@@ -371,7 +371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -35, y: -26.8}
+  m_AnchoredPosition: {x: -35, y: -26.800049}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &20242002
@@ -2401,7 +2401,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1485975850}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4174,7 +4174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -13.200012}
+  m_AnchoredPosition: {x: 0, y: -13.199951}
   m_SizeDelta: {x: 199.5, y: 85.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074032737
@@ -5520,6 +5520,7 @@ RectTransform:
   - {fileID: 1847968796}
   - {fileID: 1627439597}
   - {fileID: 1030848070}
+  - {fileID: 1830286176}
   - {fileID: 630847859}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -6281,7 +6282,7 @@ RectTransform:
   - {fileID: 1511085483}
   - {fileID: 1181132773}
   m_Father: {fileID: 1889914938}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -7335,15 +7336,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830286175}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1508027749}
   - {fileID: 663397767}
-  m_Father: {fileID: 1889914938}
-  m_RootOrder: 4
+  m_Father: {fileID: 1485975850}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7820,7 +7821,6 @@ RectTransform:
   - {fileID: 20242001}
   - {fileID: 1246915850}
   - {fileID: 1761810608}
-  - {fileID: 1830286176}
   - {fileID: 1624809204}
   m_Father: {fileID: 1485975850}
   m_RootOrder: 1
