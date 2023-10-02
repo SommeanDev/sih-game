@@ -4,104 +4,96 @@ using UnityEngine;
 
 public class smove : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Adjust this to control the forward movement speed
+    public float moveSpeed = 1.0f; // Adjust this to control the forward movement speed
     public float maxRotationAngle = 25f; // Maximum rotation angle in degrees
     private Rigidbody2D rb2d;
     private bool isMovingUp = false;
     private bool isMovingDown = false;
     private float currentRotationAngle = -10f; 
-    public float rotationSpeed = 5f;
+    public float rotationSpeed = 2.5f;
+    public bool ispaused = false;
+    private bool isButtonDownDown = false; 
+    private bool isButtonDownUp = false;
+    public float smoothTime = 0.2f; // Adjust this value to control the smoothing effect
+private Vector2 velocity = Vector2.zero;
+
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        Input.gyro.enabled = true;
     }
 
     void Update()
     {
         // Forward movement with constant velocity
-       
+       if(!ispaused)
+       {
         Vector2 forwardVelocity = new Vector2(moveSpeed, rb2d.velocity.y);
-        rb2d.velocity = forwardVelocity;
-
-        // Rotate the sprite smoothly
+        rb2d.velocity = forwardVelocity; 
+        Vector3 gyroRotationRate = Input.gyro.rotationRate;
         float targetRotation = 0f;
 
-        if (isMovingUp)
-        {
-            targetRotation = maxRotationAngle;
-        }
-        else if (isMovingDown)
-        {
-            targetRotation = -maxRotationAngle;
-        }
+        // if (isMovingUp)
+        // {
+        //     targetRotation = maxRotationAngle;
+        // }
+        // else if (isMovingDown)
+        // {
+        //     targetRotation = maxRotationAngle;
+        // }
+       if (Mathf.Abs(gyroRotationRate.z) > 0.1f)
+            {
+                targetRotation = Mathf.Clamp(gyroRotationRate.z * maxRotationAngle, -maxRotationAngle, maxRotationAngle);
+            }
 
         currentRotationAngle = Mathf.Lerp(currentRotationAngle, targetRotation, Time.deltaTime * rotationSpeed);
         RotateSprite(currentRotationAngle);
 
-     
-    }
-
-    // Function to move the sprite up when the "Up" button is pressed
-    public void MoveUp()
+   
+    // Check gyroscope rotation
+   
+    if (Mathf.Abs(gyroRotationRate.z) > 0.1f)
     {
-        Vector2 upwardVelocity = new Vector2(rb2d.velocity.x, moveSpeed);
-        rb2d.velocity = upwardVelocity;
-        isMovingUp = true;
-        isMovingDown = false;
         
-        // Start the coroutine with a 1-second delay
-        StartCoroutine(DelayedStopVerticalMovement());
+            MoveUp(targetRotation);
+        
     }
+}
+ 
+}
 
+     
     
 
-    // Function to move the sprite down when the "Down" button is pressed
-    public void MoveDown()
-    {
-        Vector2 downwardVelocity = new Vector2(rb2d.velocity.x, -moveSpeed);
-        rb2d.velocity = downwardVelocity;
-        isMovingDown = true;
-        isMovingUp = false;
-        StartCoroutine(DelayedStopVerticalMovement());
-    }
-
-    private IEnumerator DelayedStopVerticalMovement()
-    {
-        yield return new WaitForSeconds(0.5f); // Wait for 1 second
-        StopVerticalMovement(); // Call your method after the delay
-    }
-
-    // Function to stop the sprite's vertical movement when the buttons are released
- public void StopVerticalMovement()
+    public void MoveUp(float targetRotation)
 {
-    isMovingUp = false;
+    isMovingUp = true;
     isMovingDown = false;
 
-    // Smoothly interpolate the rotation back to (0, 0, 0) over a longer duration
-    StartCoroutine(LerpRotation(Quaternion.Euler(0f, 0f, 0f), 1.0f));
-}
+    // Calculate the desired velocity
+    Vector2 targetVelocity = new Vector2(rb2d.velocity.x, targetRotation / 2);
 
-private IEnumerator LerpRotation(Quaternion targetRotation, float duration)
-{
-    float timeElapsed = 0f;
-    Quaternion initialRotation = transform.rotation;
-
-    while (timeElapsed < duration)
-    {
-        transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, timeElapsed / duration);
-        timeElapsed += Time.deltaTime;
-        yield return null;
-    }
-
-    // Ensure the final rotation is exactly the target rotation
-    transform.rotation = targetRotation;
+    // Smoothly interpolate the velocity
+    rb2d.velocity = Vector2.SmoothDamp(rb2d.velocity, targetVelocity, ref velocity, smoothTime);
 }
 
 
-    // Rotate the sprite in the Z-direction
+
+
     private void RotateSprite(float angle)
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        transform.rotation = Quaternion.Euler(0f, 0f, angle*2);
+    }
+    public void pause()
+    {
+        ispaused = true;
+        Vector2 ZeroVelocity = new Vector2(0f, 0f);
+        rb2d.velocity = ZeroVelocity;
+    }
+    public void resume()
+    {
+        ispaused = false;
+        
     }
 }
