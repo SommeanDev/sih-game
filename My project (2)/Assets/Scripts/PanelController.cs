@@ -16,7 +16,7 @@ public class PanelController : MonoBehaviour
 
      private void Start()
     {
-          ActivateStartPanel();
+        ActivatePanel(startPanel);
         if (PlayerPrefs.GetInt("IsSceneLoadedBefore", 0) == 0)
         {
             StartCoroutine(ActivateHomePanelAfterDelay(2.0f));
@@ -24,62 +24,20 @@ public class PanelController : MonoBehaviour
         }
         else
         {
-            ActivateGamePanel();
+            ActivatePanel(homePanel);
         }
-    }
-
-
-    public void ActivateStartPanel()
-    {
-        startPanel.SetActive(true);
-        homePanel.SetActive(false);
-        gamePanel.SetActive(false);
-        quizPanel.SetActive(false);
-        dailyPanel.SetActive(false);
-        bgm.SetActive(false);
-    }
-
-    // Function to activate the Home Panel and deactivate the Start Panel
-    public void ActivateHomePanel()
-    {
-        startPanel.SetActive(false);
-        homePanel.SetActive(true);
-        gamePanel.SetActive(false);
-        quizPanel.SetActive(false);
-        dailyPanel.SetActive(false);
         bgm.SetActive(true);
     }
 
-    public void ActivateGamePanel()
+    public void ActivatePanel(GameObject panel)
     {
-        startPanel.SetActive(false);
-        homePanel.SetActive(false);
-        gamePanel.SetActive(true);
-        quizPanel.SetActive(false);
-        dailyPanel.SetActive(false);
-        bgm.SetActive(true);
+        panel.SetActive(true);
     }
 
-    public void ActivateQuizPanel()
+    public void DeActivatePanel(GameObject panel)
     {
-        startPanel.SetActive(false);
-        homePanel.SetActive(false);
-        gamePanel.SetActive(false);
-        quizPanel.SetActive(true);
-        dailyPanel.SetActive(false);
-        bgm.SetActive(false);
+        panel.SetActive(false);
     }
-
-    public void ActivateDilyPanel()
-    {
-        startPanel.SetActive(false);
-        homePanel.SetActive(false);
-        gamePanel.SetActive(false);
-        quizPanel.SetActive(false);
-        dailyPanel.SetActive(true);
-        bgm.SetActive(false);
-    }
-
     public void StartLoadingSlugSceneWithDelay()
 {
     // Set the PlayerPrefs flag to indicate that the scene has been loaded before
@@ -93,6 +51,11 @@ private void ActivateSlugScene()
 {
     SceneManager.LoadScene("SAdv_Lvl01");
 }
+    
+    public void ActivateScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 
    void Update()
     {
@@ -114,12 +77,7 @@ private void ActivateSlugScene()
     private IEnumerator ActivateHomePanelAfterDelay(float delayInSeconds)
     {
         yield return new WaitForSeconds(delayInSeconds);
-        ActivateHomePanel();
-    }
-
-    public void IpWar()
-    {
-      SceneManager.LoadScene("IPWARS");  
+        ActivatePanel(homePanel);
     }
 }
 
