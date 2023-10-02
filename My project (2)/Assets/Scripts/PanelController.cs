@@ -8,8 +8,7 @@ public class PanelController : MonoBehaviour
     public GameObject startPanel; 
     public GameObject homePanel;  
     public GameObject gamePanel;
-    public GameObject quizPanel;
-    public GameObject dailyPanel;
+
     public GameObject bgm;
 
     
@@ -24,7 +23,7 @@ public class PanelController : MonoBehaviour
         }
         else
         {
-            ActivatePanel(homePanel);
+            ActivatePanel(gamePanel);
         }
         bgm.SetActive(true);
     }
