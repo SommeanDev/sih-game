@@ -18,6 +18,6 @@ public class RPGPlayerController : MonoBehaviour
     {
         float xInput = SimpleInput.GetAxisRaw("Horizontal");
         float yInput = SimpleInput.GetAxisRaw("Vertical");
-        rigidbody2D.AddForce((new Vector2(xInput, yInput)) * moveSpeed);
+        rigidbody2D.velocity = new Vector3(xInput * moveSpeed, yInput * moveSpeed);
     }
 }
