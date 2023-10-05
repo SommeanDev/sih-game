@@ -13,8 +13,8 @@ public class QuestionManager : MonoBehaviour
 
     private string[] questions = {
         "What is your favorite color?",
-        "Describe your iron man like armour concept in 4-5 words.",
-        "Explain the concept of flying car in less than 20 words.",
+        "Describe your iron man like armour concept in 8-9 words.",
+        "Explain your concept of flying car in less than 20 words.",
         "What are your free time hobbies.",
         "How do you approach problem-solving?"
     };
@@ -26,8 +26,8 @@ public class QuestionManager : MonoBehaviour
 
     private List<int> displayedQuestionIndices = new List<int>();
 
-    int creativityPercentage = 0;
-    int innovationPercentage = 0;
+    int creativityPercentage;
+    int innovationPercentage;
 
     private void Start()
     {
@@ -41,6 +41,8 @@ public class QuestionManager : MonoBehaviour
             EvaluateProblemSolvingApproach
         };
         questionsAsked = 0;
+        creativityPercentage = 0;
+        innovationPercentage = 0;
         DisplayNextQuestion();
     }
 
@@ -56,13 +58,13 @@ public class QuestionManager : MonoBehaviour
     if (currentQuestionIndex == 0 || currentQuestionIndex == 1|| currentQuestionIndex == 3)
     {
         // First and second questions: Calculate only creativity score.
-        creativityPercentage = evaluationFunctions[currentQuestionIndex](answer);
+        creativityPercentage += evaluationFunctions[currentQuestionIndex](answer);
     }
     
     else if (currentQuestionIndex == 2 || currentQuestionIndex == 4)
     {
        
-            innovationPercentage = evaluationFunctions[currentQuestionIndex](answer);
+      innovationPercentage += evaluationFunctions[currentQuestionIndex](answer);
       
     }
 
@@ -74,24 +76,32 @@ public class QuestionManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("CreativeQuotient", creativityPercentage);
         PlayerPrefs.SetInt("InnovativeQuotient", innovationPercentage);
+        questionsAsked = 0;
         questionPanel.SetActive(false);
+         ResetGameState();
+        
     }
     else
     {
+        
         DisplayNextQuestion();
     }
 }
 
+private void ResetGameState()
+    {
+        questionsAsked = 0;
+        creativityPercentage = 0;
+        innovationPercentage = 0;
+        displayedQuestionIndices.Clear(); // Clear the list of displayed questions.
+        DisplayNextQuestion(); // Start the questions again.
+    }
+
+
 
    void DisplayNextQuestion()
   {
-    // Make sure there are still questions to display.
-    if (displayedQuestionIndices.Count >= questions.Length)
-    {
-        // Handle the case when all questions have been displayed.
-        // You can reset the list of displayed indices or take some other action here.
-        return;
-    }
+   
 
     int randomIndex;
     do
@@ -149,16 +159,16 @@ public class QuestionManager : MonoBehaviour
    int matchingKeywords = words.Count(word => creativeKeywords.Contains(word));
 
     // Calculate the creativity score based on the number of matching keywords.
-    int creativityScore = matchingKeywords * 4;
+    int creativityScore = matchingKeywords * 8;
 
     // Cap the creativity score at 20.
-    if (creativityScore > 20)
+    if (creativityScore > 40)
     {
-        creativityScore = 20;
+        creativityScore = 40;
     }
 
     // If the answer exceeds 5 words, return a creativity score of 0.
-    if (words.Length > 5)
+    if (words.Length > 9)
     {
         return 0;
     }
@@ -183,7 +193,7 @@ public class QuestionManager : MonoBehaviour
     
     int innovativeMatches = words.Count(word => innovativeKeywords.Contains(word));
 
-    int innovationScore = Mathf.Clamp(innovativeMatches * 5, 0, 20);
+    int innovationScore = Mathf.Clamp(innovativeMatches * 10, 0, 40);
 
     if (words.Length > 20)
     {
@@ -212,7 +222,7 @@ public class QuestionManager : MonoBehaviour
     
 
     // Calculate creativity score based on matches.
-    int creativityScore = Mathf.Clamp((creativeMatches1) * 5, 0, 20);
+    int creativityScore = Mathf.Clamp((creativeMatches1) * 10, 0, 40);
 
     return creativityScore;
   }

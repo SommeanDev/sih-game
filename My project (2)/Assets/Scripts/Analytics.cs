@@ -11,16 +11,14 @@ public class Analytics : MonoBehaviour
     public Image creativeQuotientImage;
     public Image innovativeQuotientImage;
 
-    int creativeQuotient;
+     int creativeQuotient;
      int innovativeQuotient;
 
-    void Start()
+      void Update()
     {
-        // Get the creative quotient and innovative quotient values from PlayerPrefs
-        int creativeQuotient = PlayerPrefs.GetInt("CreativeQuotient");
-        int innovativeQuotient = PlayerPrefs.GetInt("InnovativeQuotient");
+        creativeQuotient = PlayerPrefs.GetInt("CreativeQuotient");
+        innovativeQuotient = PlayerPrefs.GetInt("InnovativeQuotient");
 
-        // Set the TextMeshPro text values
         creativeQuotientText.text = ""+ creativeQuotient + "%";
         innovativeQuotientText.text = ""+ innovativeQuotient+ "%";
 
@@ -31,14 +29,19 @@ public class Analytics : MonoBehaviour
         // Set the fill amount for the Image components
         creativeQuotientImage.fillAmount = creativeFillAmount;
         innovativeQuotientImage.fillAmount = innovativeFillAmount;
+
     }
 
-    void Update()
+    void Start()
     {
-          creativeQuotient = PlayerPrefs.GetInt("CreativeQuotient");
-        innovativeQuotient = PlayerPrefs.GetInt("InnovativeQuotient");
 
+        creativeQuotient = PlayerPrefs.GetInt("CreativeQuotient");
+        innovativeQuotient = PlayerPrefs.GetInt("InnovativeQuotient");
+      
+      
     }
+
+   
 
  
 
