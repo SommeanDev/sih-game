@@ -10,6 +10,7 @@ public class CorrectAnsChecker : MonoBehaviour
     private Color originalColor;  // Store the original color
     private int iq;
     public TextMeshProUGUI correctAnswersText;
+    private bool isVisible; // Flag to track if the GameObject is visible in the camera view
 
     private void Start()
     {
@@ -25,22 +26,21 @@ public class CorrectAnsChecker : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (isVisible)
         {
-            StartCoroutine(Destroy());
+            if (collision.gameObject.CompareTag("Bullet"))
+            {
+                StartCoroutine(Destroy());
+            }
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine(ChangeColorAndDestroy());
+                iq += 1;
+                PlayerPrefs.SetInt("IQ", iq);
+                UpdateCorrectAnswersText();
+            }
         }
-
-       else if (collision.gameObject.CompareTag("Player"))
-        {
-            StartCoroutine(ChangeColorAndDestroy());
-            iq += 1;
-            PlayerPrefs.SetInt("IQ", iq);
-            UpdateCorrectAnswersText();
-        }
-   }
-    
-
-
+    }
 
     private IEnumerator ChangeColorAndDestroy()
     {
@@ -54,14 +54,11 @@ public class CorrectAnsChecker : MonoBehaviour
         // Restore the original color
         rend.material.color = originalColor;
 
-
         // Destroy the GameObject
         Destroy(gameObject);
-
-        
     }
 
-     private IEnumerator Destroy()
+    private IEnumerator Destroy()
     {
         // Change the color to green
         rend.material.color = Color.green;
@@ -79,10 +76,24 @@ public class CorrectAnsChecker : MonoBehaviour
         // Reload the current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-     void UpdateCorrectAnswersText()
+
+    void UpdateCorrectAnswersText()
     {
         // Update the TextMeshProUGUI component with the correct answers count
-        correctAnswersText.text = ""+iq;
+        correctAnswersText.text = "" + iq;
+    }
+
+    // Called when the GameObject becomes visible to any camera
+    private void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+
+    // Called when the GameObject is no longer visible to any camera
+    private void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 }
+
 
