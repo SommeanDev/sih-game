@@ -10,6 +10,7 @@ public class Incorrectans : MonoBehaviour
     private Color originalColor;  // Store the original color
     private int iq;
     public TextMeshProUGUI correctAnswersText;
+    private bool isVisible; 
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class Incorrectans : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+         if (isVisible)
+    {
         if (collision.gameObject.CompareTag("Bullet"))
         {
             StartCoroutine(Destroy());
@@ -38,6 +41,7 @@ public class Incorrectans : MonoBehaviour
         {
             StartCoroutine(ChangeColorAndDestroy());
         }
+    }
     }
 
 
@@ -83,5 +87,16 @@ public class Incorrectans : MonoBehaviour
     {
         // Update the TextMeshProUGUI component with the correct answers count
         correctAnswersText.text = ""+iq;
+    }
+
+    private void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+
+    // Called when the GameObject is no longer visible to any camera
+    private void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 }
