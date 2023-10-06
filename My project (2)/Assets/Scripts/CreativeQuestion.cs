@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class QuestionManager : MonoBehaviour
+public class CreativeQuestion : MonoBehaviour
 {
     public GameObject questionPanel; // Reference to the panel you want to deactivate.
     public TextMeshProUGUI questionText;
