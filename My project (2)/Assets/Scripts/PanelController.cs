@@ -7,11 +7,26 @@ public class PanelController : MonoBehaviour
 {
     public GameObject homePanel;  
     public GameObject gamePanel;
+    public GameObject profileMaking;
     public GameObject bgm;
 
     private void Start()
     {
-        ActivatePanel(homePanel); 
+        // Check if the tutorial has been shown before
+        if (PlayerPrefs.GetInt("TutorialShown", 0) == 0)
+        {
+            // Tutorial has not been shown, so activate it
+            ActivatePanel(profileMaking);
+            // Set the flag to indicate that the tutorial has been shown
+            PlayerPrefs.SetInt("TutorialShown", 1);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            // PlayerPrefs.SetInt("TutorialShown", 0);
+            ActivatePanel(homePanel);
+        }
+
         bgm.SetActive(true);
     }
 
