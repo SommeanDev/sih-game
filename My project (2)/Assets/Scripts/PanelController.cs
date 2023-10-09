@@ -55,6 +55,12 @@ public class PanelController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void RestartScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
+
    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
