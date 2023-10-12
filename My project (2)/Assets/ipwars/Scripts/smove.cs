@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class smove : MonoBehaviour
 {
     public float moveSpeed = 1.0f; // Adjust this to control the forward movement speed
@@ -93,7 +93,14 @@ private Vector2 velocity = Vector2.zero;
     }
     public void resume()
     {
+        Time.timeScale = 1.0f;
         ispaused = false;
         
+    }
+
+    public void restart()
+    {
+         Time.timeScale = 1.0f;
+         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
