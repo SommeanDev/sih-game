@@ -13,6 +13,9 @@ public class ColliderController : MonoBehaviour
     private Renderer rend;  // Reference to the Renderer component
     private Color originalColor; 
 
+    
+    public GameObject Gameover;
+
 
     void Update()
 {
@@ -35,17 +38,32 @@ public class ColliderController : MonoBehaviour
             playerObstacleCollisions++;
             if (playerObstacleCollisions >= 2)
             {
-                Destroy(gameObject); // Destroy the player
-                RestartScene();
+                Time.timeScale = 0f;
+                Gameover.SetActive(true);
+              if (Time.timeScale == 1)
+{
+    // Destroy the gameObject
+    Destroy(gameObject);
+
+    // Reload the current scene
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
             }
         }
 
         else if (collision.gameObject.CompareTag("Boundary"))
         {
             
-          
-                Destroy(gameObject); // Destroy the player
-                RestartScene();
+                Time.timeScale = 0f;
+                 Gameover.SetActive(true);
+                if (Time.timeScale == 1)
+{
+    // Destroy the gameObject
+    Destroy(gameObject);
+
+    // Reload the current scene
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
             
         }
       

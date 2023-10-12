@@ -7,6 +7,9 @@ public class rockDestruct : MonoBehaviour
 {
     private bool isVisible = true; // Flag to track if the GameObject is visible in the camera view
 
+    
+    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isVisible && collision.gameObject.CompareTag("Bullet"))

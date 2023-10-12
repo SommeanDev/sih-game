@@ -12,6 +12,9 @@ public class CorrectAnsChecker : MonoBehaviour
     public TextMeshProUGUI correctAnswersText;
     private bool isVisible; // Flag to track if the GameObject is visible in the camera view
 
+    public GameObject Gameover;
+    
+
     private void Start()
     {
         // Get the Renderer component attached to the GameObject
@@ -69,12 +72,21 @@ public class CorrectAnsChecker : MonoBehaviour
 
         // Restore the original color
         rend.material.color = originalColor;
+        Time.timeScale = 0f;
+
+        Gameover.SetActive(true);
 
         // Destroy the GameObject
-        Destroy(gameObject);
 
-        // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        if (Time.timeScale == 1)
+{
+    // Destroy the gameObject
+    Destroy(gameObject);
+
+    // Reload the current scene
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
     }
 
     void UpdateCorrectAnswersText()

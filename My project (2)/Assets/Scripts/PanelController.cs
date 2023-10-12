@@ -17,6 +17,8 @@ public class PanelController : MonoBehaviour
         {
             // Tutorial has not been shown, so activate it
             ActivatePanel(profileMaking);
+            ActivatePanel(homePanel);
+            bgm.SetActive(true);
             // Set the flag to indicate that the tutorial has been shown
             PlayerPrefs.SetInt("TutorialShown", 1);
             PlayerPrefs.Save();
@@ -25,9 +27,10 @@ public class PanelController : MonoBehaviour
         {
             // PlayerPrefs.SetInt("TutorialShown", 0);
             ActivatePanel(homePanel);
+            bgm.SetActive(true);
         }
 
-        bgm.SetActive(true);
+        
     }
 
     public void ActivatePanel(GameObject panel)
@@ -42,7 +45,7 @@ public class PanelController : MonoBehaviour
 
     public void StartLoadingSlugSceneWithDelay()
     {
-       Invoke("ActivateSlugScene", 1.5f);
+       Invoke("ActivateSlugScene", 0f);
     }
 
     private void ActivateSlugScene()

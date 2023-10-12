@@ -5,30 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is call before the first frame update
-    public smove spaceship;
+    public GameObject spaceship;
     public GameObject tutorial;
+    public smove PAUSE;
+
+    int TutorialSceneShown;
+
+    void Awake()
+    {
+        // Initialize TutorialSceneShown with PlayerPrefs data.
+        TutorialSceneShown = PlayerPrefs.GetInt("IPWarTutorial");
+    }
 
     void Start()
     {
-        if (PlayerPrefs.GetInt("IPWarTutorial", 0) == 0)
+        AudioSource spaceshipAudio = spaceship.GetComponent<AudioSource>();
+
+        if (TutorialSceneShown == 0)
         {
             ActivatePanel(tutorial);
-            spaceship.pause();
-            PlayerPrefs.SetInt("IPWarTutorial", 1);
+            PAUSE.pause();
+
+            if (spaceshipAudio != null)
+            {
+                spaceshipAudio.Pause();
+            }
+
+            TutorialSceneShown++;
+            PlayerPrefs.SetInt("IPWarTutorial", TutorialSceneShown);
             PlayerPrefs.Save();
         }
-
         else
         {
             DeActivatePanel(tutorial);
+            spaceshipAudio.Play();
         }
-
-    
-       
     }
 
-     public void ActivatePanel(GameObject panel)
+    public void ActivatePanel(GameObject panel)
     {
         panel.SetActive(true);
     }
@@ -38,11 +52,10 @@ public class MainMenu : MonoBehaviour
         panel.SetActive(false);
     }
 
-
-     public void mainmenu()
+    public void mainmenu()
     {
+        // Optionally, reset PlayerPrefs when returning to the main menu
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("MenuAndQuizScene");
     }
-
-    
 }

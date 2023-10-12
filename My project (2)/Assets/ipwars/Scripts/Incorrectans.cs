@@ -12,6 +12,8 @@ public class Incorrectans : MonoBehaviour
     public TextMeshProUGUI correctAnswersText;
     private bool isVisible; 
 
+    public GameObject Gameover;
+
     private void Start()
     {
         // Get the Renderer component attached to the GameObject
@@ -57,10 +59,19 @@ public class Incorrectans : MonoBehaviour
 
         // Restore the original color
         rend.material.color = originalColor;
+        Time.timeScale = 0f;
+
+        Gameover.SetActive(true);
 
         // Destroy the GameObject
-        Destroy(gameObject);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (Time.timeScale == 1)
+{
+    // Destroy the gameObject
+    Destroy(gameObject);
+
+    // Reload the current scene
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+}
 
         
     }
